@@ -1,7 +1,7 @@
 import Chart from "../../components/chart/Chart";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import "./home.css";
-import { userData } from "../../dummyData";
+// import { userData } from "../../dummyData";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
 import {useEffect, useState,useMemo} from 'react'
@@ -9,6 +9,8 @@ import axios from 'axios'
 
 
 export default function Home() {
+  
+  const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL})
   const MONTHS = useMemo(()=>
   [
     "Jan",
@@ -30,7 +32,7 @@ export default function Home() {
   useEffect(()=>{
     const getStats = async ()=>{
       try{
-        const res = await axios.get('/users/stats',{
+        const res = await axiosInstance.get('/users/stats',{
           headers:{
             token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDY0OWUxNWI5NWU5NzE2MDI0ZjU0MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyNzgyNTU3NywiZXhwIjoxNjI4MjU3NTc3fQ.6ir3ufJCmM4B2jRw7_2_IJdZ9OW2xzc8Z_MoVKyuMN8"
           }
@@ -50,7 +52,7 @@ export default function Home() {
       }
     }
     getStats()
-  },[MONTHS])
+  },[MONTHS,axiosInstance])
   console.log(userStats)
   return (
     <div className="home">

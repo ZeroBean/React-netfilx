@@ -10,14 +10,16 @@ export default function Home({type}) {
 
     const[lists,setLists] = useState([])
     const [genre,setGenre] = useState(null)
+    const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL})
+
     useEffect(()=>{
         const getRandomLists = async ()=>{
             try{
-                const res = await axios.get(
+                const res = await axiosInstance.get(
                     `lists${type ? "?type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
                     {
                         headers:{
-                            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDY0OWUxNWI5NWU5NzE2MDI0ZjU0MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyNzgyNTU3NywiZXhwIjoxNjI4MjU3NTc3fQ.6ir3ufJCmM4B2jRw7_2_IJdZ9OW2xzc8Z_MoVKyuMN8"
+                            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDY0OWUxNWI5NWU5NzE2MDI0ZjU0MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyODc3MjIwMiwiZXhwIjoxNjQ2MDUyMjAyfQ.UCOu_DfNhqZs1Mj-4foqLvz63kXDC3y7-l21SMDEd1Y"
                         }
                     }
                 )
@@ -28,7 +30,7 @@ export default function Home({type}) {
             }
         }
         getRandomLists()
-    },[genre,type])
+    },[genre,type,axiosInstance])
     return (
         <div className="home">
             <Navbar/>

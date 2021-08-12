@@ -10,7 +10,7 @@ export default function Register() {
     const history = useHistory()
 
     const emailRef = useRef()
-
+    const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL})
 
     const handleStart = ()=>{
         setEmail(emailRef.current.value)
@@ -23,7 +23,7 @@ export default function Register() {
             console.log(email)
             console.log(username)
             console.log(password)
-            await axios.post("/auth/register",{email,username,password})
+            await axiosInstance.post("/auth/register",{email,username,password})
             history.push("/login")
         }catch(err){
             console.log(err)

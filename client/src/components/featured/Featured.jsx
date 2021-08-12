@@ -6,13 +6,14 @@ import './featured.scss'
 
 export default function Featured({type,setGenre}) {
     const [content,setContent] = useState({})
+    const axiosInstance = axios.create({baseURL:process.env.REACT_APP_API_URL})
 
     useEffect(()=>{
         const getRandomContent = async ()=>{
             try{
-                const res = await axios.get(`/movies/random?type=${type}`,{
+                const res = await axiosInstance.get(`/movies/random?type=${type}`,{
                     headers:{
-                        token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDY0OWUxNWI5NWU5NzE2MDI0ZjU0MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyNzgyNTU3NywiZXhwIjoxNjI4MjU3NTc3fQ.6ir3ufJCmM4B2jRw7_2_IJdZ9OW2xzc8Z_MoVKyuMN8"
+                        token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDY0OWUxNWI5NWU5NzE2MDI0ZjU0MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYyODc3MjIwMiwiZXhwIjoxNjQ2MDUyMjAyfQ.UCOu_DfNhqZs1Mj-4foqLvz63kXDC3y7-l21SMDEd1Y"
                     }
                 })
                 // console.log(res.data[0])
@@ -22,7 +23,7 @@ export default function Featured({type,setGenre}) {
             }
         }
         getRandomContent()
-    },[type])
+    },[type,axiosInstance])
     return (
         <div className="featured">
             {
